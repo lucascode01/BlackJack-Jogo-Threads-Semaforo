@@ -30,7 +30,7 @@ class Dealer:
         max_score = -1
         winner = None
         for i, score in enumerate(self.player_scores):
-            if score <= 31 and score > max_score:
+            if score <= 21 and score > max_score:
                 max_score = score
                 winner = i
         return winner

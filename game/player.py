@@ -10,7 +10,7 @@ class Player(threading.Thread):
         self.turn_sem = turn_sem
         self.done_sem = done_sem
         self.score = 0
-        self.max_score = 31
+        self.max_score = 21
 
     def draw_card(self):
         return random.randint(1, 11)

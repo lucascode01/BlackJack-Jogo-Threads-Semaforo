@@ -2,7 +2,7 @@
 
 def print_welcome():
     print("=" * 40)
-    print("🂡 Blackjack 31 - Sistema de Threads")
+    print("🂡 Blackjack 21 - Sistema de Threads")
     print("=" * 40)
 
 def ask_round():
