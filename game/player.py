@@ -6,6 +6,7 @@ class Player(threading.Thread):
     def __init__(self, player_id, dealer, turn_sem, done_sem):
         super().__init__()
         self.player_id = player_id
+        self.name = f"Jogador {player_id + 1}"
         self.dealer = dealer
         self.turn_sem = turn_sem
         self.done_sem = done_sem
@@ -20,14 +21,14 @@ class Player(threading.Thread):
             self.turn_sem[self.player_id].acquire()
             if self.dealer.game_over:
                 break
-            print(f"Player {self.player_id} is playing...")
+            print(f"{self.name} está jogando...")
             self.score = 0
             while self.score < self.max_score:
                 card = self.draw_card()
                 self.score += card
-                print(f"Player {self.player_id} drew {card}, total: {self.score}")
+                print(f"{self.name} comprou {card}, total: {self.score}")
                 time.sleep(0.5)
                 if self.score >= self.max_score:
                     break
             self.dealer.player_scores[self.player_id] = self.score
-            self.done_sem.release()
+            self.done_sem[self.player_id].release()

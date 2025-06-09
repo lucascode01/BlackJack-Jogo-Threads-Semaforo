@@ -1,31 +1,34 @@
-
-
-from game.dealer import Dealer
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+import threading
 from game.player import Player
-from game.game_logic import print_welcome, ask_round
+from game.dealer import Dealer
 
 def main():
-    print_welcome()
+    dealer = Dealer(num_players=3)
+    turn_sems = [threading.Semaphore(0) for _ in range(3)]
+    done_sems = [threading.Semaphore(0) for _ in range(3)]
 
-    num_players = 3
-    dealer = Dealer(num_players)
-    players = [Player(i, dealer, dealer.turn_sem, dealer.done_sem) for i in range(num_players)]
+    jogadores = [
+        Player(0, dealer, turn_sems, done_sems),
+        Player(1, dealer, turn_sems, done_sems),
+        Player(2, dealer, turn_sems, done_sems)
+    ]
 
-    for p in players:
-        p.start()
+    for jogador in jogadores:
+        jogador.start()
 
-    try:
-        while True:
-            dealer.start_round()
-            dealer.show_results()
-            if not ask_round():
-                break
-    finally:
-        dealer.end_game()
-        for p in players:
-            p.join()
+    dealer.turn_sem = turn_sems
+    dealer.done_sem = done_sems
+    dealer.start_round()
+    dealer.show_results()
+    dealer.end_game()
 
-    print("Jogo encerrado. Obrigado por jogar!")
+    for jogador in jogadores:
+        jogador.join()
+
+    print("\nTodas as rodadas terminaram!")
 
 if __name__ == "__main__":
     main()

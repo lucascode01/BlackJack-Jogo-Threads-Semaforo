@@ -4,8 +4,8 @@ class Dealer:
     def __init__(self, num_players):
         self.num_players = num_players
         self.player_scores = [0] * num_players
-        self.turn_sem = [threading.Semaphore(0) for _ in range(num_players)]
-        self.done_sem = threading.Semaphore(0)
+        self.turn_sem = None
+        self.done_sem = None
         self.game_over = False
 
     def start_round(self):
@@ -13,8 +13,8 @@ class Dealer:
         for i in range(self.num_players):
             self.turn_sem[i].release()
 
-        for _ in range(self.num_players):
-            self.done_sem.acquire()
+        for i in range(self.num_players):
+            self.done_sem[i].acquire()
 
     def show_results(self):
         print("\nRound finished. Results:")
@@ -37,5 +37,6 @@ class Dealer:
 
     def end_game(self):
         self.game_over = True
-        for sem in self.turn_sem:
-            sem.release()
+        if self.turn_sem:
+            for sem in self.turn_sem:
+                sem.release()
