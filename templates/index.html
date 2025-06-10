@@ -9,20 +9,44 @@
 <body>
     <div class="container">
         <h1>Blackjack</h1>
-        <form action="/" method="POST">
-            <label>Nome do Jogador 1:</label>
-            <input type="text" name="nome1" placeholder="Jogador 1"><br><br>
-            <label>Nome do Jogador 2:</label>
-            <input type="text" name="nome2" placeholder="Jogador 2"><br><br>
-            <label>Nome do Jogador 3:</label>
-            <input type="text" name="nome3" placeholder="Jogador 3"><br><br>
-            <button type="submit">Iniciar Jogo</button>
-        </form>
+
+        {% if not jogador %}
+            <form action="/" method="POST">
+                <label>Nome do Jogador 1:</label>
+                <input type="text" name="nome1" placeholder="Jogador 1"><br><br>
+                <label>Nome do Jogador 2:</label>
+                <input type="text" name="nome2" placeholder="Jogador 2"><br><br>
+                <label>Nome do Jogador 3:</label>
+                <input type="text" name="nome3" placeholder="Jogador 3"><br><br>
+                <button type="submit">Iniciar Jogo</button>
+            </form>
+        {% endif %}
+
+        {% if jogador %}
+            <h2>Vez de {{ jogador }}</h2>
+            <p>Pontuação atual: {{ pontuacao }}</p>
+            <form action="/jogo" method="POST">
+                <button name="action" value="hit">Comprar carta</button>
+                <button name="action" value="stand">Parar</button>
+            </form>
+        {% endif %}
 
         {% if resultados %}
             <h2>Resultado</h2>
-            <p>{{ resultados }}</p>
-            <h3>Detalhes:</h3>
+            <ul>
+                {% for nome, score in resultados.items() %}
+                    <li><strong>{{ nome }}:</strong> {{ score }}</li>
+                {% endfor %}
+            </ul>
+            {% if vencedor %}
+                <h3>🎉 Vencedor: {{ vencedor }} 🎉</h3>
+            {% else %}
+                <h3>Ninguém venceu. Todos estouraram!</h3>
+            {% endif %}
+        {% endif %}
+
+        {% if logs %}
+            <h3>Detalhes da Partida</h3>
             <pre>{{ logs }}</pre>
         {% endif %}
     </div>
