@@ -22,14 +22,13 @@ class Player(threading.Thread):
             if self.dealer.game_over:
                 break
             self.score = 0
+            self.logs = f"{self.name} começou a jogar...\n"
             while self.score < self.max_score:
-                print(f"{self.name}, sua pontuação atual é {self.score}.")
-                escolha = input(f"{self.name}, deseja comprar uma carta? (s para sim, n para não): ").strip().lower()
-                if escolha != 's':
+                if self.score >= 17:
                     break
                 card = self.draw_card()
                 self.score += card
-                print(f"{self.name} comprou {card}, total: {self.score}")
+                self.logs += f"{self.name} comprou {card}, total: {self.score}\n"
                 time.sleep(0.5)
                 if self.score >= self.max_score:
                     break

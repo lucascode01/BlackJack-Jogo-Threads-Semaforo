@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack - Início</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+</head>
+<body>
+    <div class="container">
+        <h1>Blackjack</h1>
+        <form action="/" method="POST">
+            <label>Nome do Jogador 1:</label>
+            <input type="text" name="nome1" placeholder="Jogador 1"><br><br>
+            <label>Nome do Jogador 2:</label>
+            <input type="text" name="nome2" placeholder="Jogador 2"><br><br>
+            <label>Nome do Jogador 3:</label>
+            <input type="text" name="nome3" placeholder="Jogador 3"><br><br>
+            <button type="submit">Iniciar Jogo</button>
+        </form>
+
+        {% if resultados %}
+            <h2>Resultado</h2>
+            <p>{{ resultados }}</p>
+            <h3>Detalhes:</h3>
+            <pre>{{ logs }}</pre>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+<style>
+    body {
+        background-image: url('../static/1.png');
+        background-size: cover;
+        color: whitesmoke;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    label, input, button {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    input, button {
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    pre {
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+    }
+</style>
