@@ -3,10 +3,10 @@ import random
 import time
 
 class Player(threading.Thread):
-    def __init__(self, player_id, dealer, turn_sem, done_sem):
+    def __init__(self, player_id, dealer, turn_sem, done_sem, nome):
         super().__init__()
         self.player_id = player_id
-        self.name = f"Jogador {player_id + 1}"
+        self.name = nome
         self.dealer = dealer
         self.turn_sem = turn_sem
         self.done_sem = done_sem

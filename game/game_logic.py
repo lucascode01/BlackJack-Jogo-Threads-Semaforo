@@ -11,6 +11,12 @@ def ask_round():
         if answer in ("s", "n"):
             return answer == "s"
 
+def pedir_nomes_jogadores(num_jogadores):
+    nomes = []
+    for i in range(num_jogadores):
+        nome = input(f"Digite o nome do jogador {i + 1}: ").strip()
+        nomes.append(nome if nome else f"Jogador {i + 1}")
+    return nomes
 
 # Função para jogar uma rodada de Blackjack
 def jogar_rodada(jogador, dealer):
